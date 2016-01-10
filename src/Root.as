@@ -1,13 +1,13 @@
 package {
 
-import events.EventsList;
+    import events.EventsList;
 
-import starling.display.Sprite;
-import starling.events.Event;
-import starling.textures.Texture;
-import starling.utils.AssetManager;
+    import starling.display.Sprite;
+    import starling.events.Event;
+    import starling.textures.Texture;
+    import starling.utils.AssetManager;
 
-public class Root extends Sprite{
+    public class Root extends Sprite{
         private static var sAssets:AssetManager;
         private var mActiveScene:Sprite;
 

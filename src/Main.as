@@ -82,7 +82,7 @@ package {
 
         private function onCreatedRoot(event:Object, app:Root):void {
             starling.removeEventListener(starling.events.Event.ROOT_CREATED, onCreatedRoot);
-            //emoveChild(background);
+            removeChild(background);
             app.start(null, assets);
             starling.start();
         }

@@ -17,6 +17,15 @@
             <entry library-id="c174f9e7-e6c8-4e99-8039-3bc742f2ede4">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="console" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="greenSock" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="bin" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIR sdk" />
         </dependencies>
@@ -186,5 +195,7 @@
         <jarDirectory url="file://$MODULE_DIR$/lib/console/console" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="greenSock" level="project" />
+    <orderEntry type="library" exported="" name="bin" level="project" />
   </component>
 </module>

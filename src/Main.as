@@ -1,90 +1,87 @@
 package {
-    import flash.desktop.NativeApplication;
-    import flash.display.Bitmap;
-    import flash.display.Sprite;
-    import flash.events.Event;
-    import flash.filesystem.File;
-    import flash.geom.Rectangle;
-    import flash.system.Capabilities;
 
-    import starling.events.Event;
-    import starling.core.Starling;
-    import starling.utils.AssetManager;
-    import starling.utils.RectangleUtil;
-    import starling.utils.ScaleMode;
-    import starling.utils.formatString;
+  import controllers.Controller;
 
-    [SWF(frameRate="30", backgroundColor="#FFFFFF")]
+  import flash.display.Bitmap;
+  import flash.display.Sprite;
+  import flash.filesystem.File;
+  import flash.geom.Rectangle;
+  import flash.system.Capabilities;
 
-    public class Main extends Sprite
-    {
-        [Embed(source="../assets/fonts/comicbd.ttf", embedAsCFF="false", fontFamily="comicbd")]
-        private static const UbuntuRegular:Class;
+  import models.Model;
 
-        [Embed(source="../assets/startup/startup.jpg")]
-        private static var Background:Class;
+  import starling.core.Starling;
+  import starling.events.Event;
+  import starling.utils.AssetManager;
+  import starling.utils.RectangleUtil;
+  import starling.utils.ScaleMode;
+  import starling.utils.formatString;
 
-        [Embed(source="../assets/startup/startupHD.jpg")]
-        private static var BackgroundHD:Class;
+  import views.View;
 
-        private var starling:Starling;
-        public var background:Bitmap;
-        private var assets:AssetManager;
+  [SWF(frameRate="30", backgroundColor="#FFFFFF")]
 
-        public function Main() {
-            var stageWidth:int = Constants.STAGE_WIDTH;
-            var stageHeight:int = Constants.STAGE_HEIGHT;
-            var iOS:Boolean = Capabilities.manufacturer.indexOf("iOS") != -1;
+  public class Main extends Sprite {
+    [Embed(source="../assets/fonts/comicbd.ttf", embedAsCFF="false", fontFamily="comicbd")]
+    private static const UbuntuRegular:Class;
 
-            Starling.multitouchEnabled = false;
-            Starling.handleLostContext = !iOS;
+    [Embed(source="../assets/graphics/1x/startup/startup.jpg")]
+    private static var Background:Class;
 
-            var viewPort:Rectangle = RectangleUtil.fit(
-                    new Rectangle(0, 0, stageWidth, stageHeight),
-                    new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight),
-                    ScaleMode.SHOW_ALL);
+    [Embed(source="../assets/graphics/2x/startup/startupHD.jpg")]
+    private static var BackgroundHD:Class;
 
-            var scaleFactor:int = viewPort.width < 480 ? 1 : 2; // midway between 320 and 640
-            var appDir:File = File.applicationDirectory;
-            assets = new AssetManager(scaleFactor);
+    private var starling:Starling;
+    public var background:Bitmap;
+    private var assets:AssetManager;
 
-            assets.verbose = Capabilities.isDebugger;
-            assets.enqueue(
-                    appDir.resolvePath("audio"),
-                    appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)),
-                    appDir.resolvePath(formatString("textures/{0}x", scaleFactor))
-            );
+    public function Main(){
+      var stageWidth:int = Constants.STAGE_WIDTH;
+      var stageHeight:int = Constants.STAGE_HEIGHT;
+      var iOS:Boolean = Capabilities.manufacturer.indexOf("iOS") != -1;
 
-            background = scaleFactor == 1 ? new Background() : new BackgroundHD();
-            Background = BackgroundHD = null; // no longer needed!
+      Starling.multitouchEnabled = false;
+      Starling.handleLostContext = !iOS;
 
-            background.x = viewPort.x;
-            background.y = viewPort.y;
-            background.width  = viewPort.width;
-            background.height = viewPort.height;
-            background.smoothing = true;
-            addChild(background);
+      var viewPort:Rectangle = RectangleUtil.fit(new Rectangle(0, 0, stageWidth, stageHeight), new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight), ScaleMode.SHOW_ALL);
 
-            starling = new Starling(Root, stage, viewPort);
-            starling.stage.stageWidth  = stageWidth;
-            starling.stage.stageHeight = stageHeight;
-            starling.simulateMultitouch  = false;
-            starling.enableErrorChecking = Capabilities.isDebugger;
+      var scaleFactor:int = viewPort.width < 480 ? 1 : 2; // midway between 320 and 640
+      var appDir:File = File.applicationDirectory;
+      assets = new AssetManager(scaleFactor);
 
-            starling.addEventListener(starling.events.Event.ROOT_CREATED, onCreatedRoot);
+      assets.verbose = Capabilities.isDebugger;
+      assets.enqueue(appDir.resolvePath("audio"), appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)), appDir.resolvePath(formatString("textures/{0}x", scaleFactor)));
 
-            NativeApplication.nativeApplication.addEventListener(
-                    flash.events.Event.ACTIVATE, function (e:*):void { starling.start(); });
+      background = scaleFactor == 1 ? new Background() : new BackgroundHD();
+      Background = BackgroundHD = null; // no longer needed!
 
-            NativeApplication.nativeApplication.addEventListener(
-                    flash.events.Event.DEACTIVATE, function (e:*):void { starling.stop(); });
-        }
+      background.x = viewPort.x;
+      background.y = viewPort.y;
+      background.width = viewPort.width;
+      background.height = viewPort.height;
+      background.smoothing = true;
+      addChild(background);
 
-        private function onCreatedRoot(event:Object, app:Root):void {
-            starling.removeEventListener(starling.events.Event.ROOT_CREATED, onCreatedRoot);
-            removeChild(background);
-            app.start(null, assets);
-            starling.start();
-        }
+      starling = new Starling(Root, stage, viewPort);
+      starling.stage.stageWidth = stageWidth;
+      starling.stage.stageHeight = stageHeight;
+      starling.simulateMultitouch = false;
+      starling.enableErrorChecking = Capabilities.isDebugger;
+
+      starling.addEventListener(Event.ROOT_CREATED, onCreatedRoot);
     }
+
+    private function onCreatedRoot(event:Object, app:Root):void{
+      starling.removeEventListener(Event.ROOT_CREATED, onCreatedRoot);
+      removeChild(background);
+
+      app.start(null, assets);
+
+      var model:Model = new Model();
+      var controller:Controller = new Controller(model);
+      var view:View = new View(model, controller, this.starling.stage);
+
+      starling.start();
+    }
+  }
 }

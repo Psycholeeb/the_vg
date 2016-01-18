@@ -3,19 +3,19 @@
  */
 package controllers {
 
-    import models.Model;
+  import models.Model;
 
-    import starling.events.KeyboardEvent;
+  import starling.events.KeyboardEvent;
 
-    public class Controller {
-        private var model:Model;
+  public class Controller {
+    private var model:Model;
 
-        public function Controller(aModel:Model) {
-            this.model = aModel;
-        }
-
-        public function keyPressHendler(event:KeyboardEvent):void{
-            model.setKey(event.charCode);
-        }
+    public function Controller(aModel:Model){
+      this.model = aModel;
     }
+
+    public function keyPressHendler(event:KeyboardEvent):void{
+      model.setKey(event.charCode);
+    }
+  }
 }

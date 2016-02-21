@@ -15,7 +15,7 @@ package controllers {
     }
 
     public function keyPressHendler(event:KeyboardEvent):void{
-      model.setKey(event.charCode);
+     // model.setKey(event.charCode);
     }
   }
 }

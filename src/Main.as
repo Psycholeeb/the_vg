@@ -11,7 +11,6 @@ package {
   import models.Model;
 
   import starling.core.Starling;
-  import starling.events.Event;
   import starling.utils.AssetManager;
   import starling.utils.RectangleUtil;
   import starling.utils.ScaleMode;
@@ -19,7 +18,7 @@ package {
 
   import views.View;
 
-  [SWF(frameRate="30", backgroundColor="#FFFFFF")]
+  [SWF(frameRate="30", backgroundColor="#F4F5F5")]
 
   public class Main extends Sprite {
     [Embed(source="../assets/fonts/comicbd.ttf", embedAsCFF="false", fontFamily="comicbd")]
@@ -33,7 +32,7 @@ package {
 
     private var starling:Starling;
     public var background:Bitmap;
-    private var assets:AssetManager;
+    public var assets:AssetManager;
 
     public function Main(){
       var stageWidth:int = Constants.STAGE_WIDTH;
@@ -50,8 +49,22 @@ package {
       assets = new AssetManager(scaleFactor);
 
       assets.verbose = Capabilities.isDebugger;
-      assets.enqueue(appDir.resolvePath("audio"), appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)), appDir.resolvePath(formatString("textures/{0}x", scaleFactor)));
+      //assets.verbose = true;
+      //assets.enqueue(appDir.resolvePath("audio"), appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)), appDir.resolvePath(formatString("textures/{0}x", scaleFactor)));
+      assets.enqueue(EmbeddedAssets);
 
+      firstPresentationImage(scaleFactor, viewPort);
+
+      starling = new Starling(null, stage, viewPort);
+      starling.stage.stageWidth = stageWidth;
+      starling.stage.stageHeight = stageHeight;
+      starling.simulateMultitouch = false;
+      starling.enableErrorChecking = Capabilities.isDebugger;
+
+      afterInit();
+    }
+
+    private function firstPresentationImage(scaleFactor, viewPort):void{
       background = scaleFactor == 1 ? new Background() : new BackgroundHD();
       Background = BackgroundHD = null; // no longer needed!
 
@@ -61,22 +74,9 @@ package {
       background.height = viewPort.height;
       background.smoothing = true;
       addChild(background);
-
-      starling = new Starling(Root, stage, viewPort);
-      starling.stage.stageWidth = stageWidth;
-      starling.stage.stageHeight = stageHeight;
-      starling.simulateMultitouch = false;
-      starling.enableErrorChecking = Capabilities.isDebugger;
-
-      starling.addEventListener(Event.ROOT_CREATED, onCreatedRoot);
     }
 
-    private function onCreatedRoot(event:Object, app:Root):void{
-      starling.removeEventListener(Event.ROOT_CREATED, onCreatedRoot);
-      removeChild(background);
-
-      app.start(null, assets);
-
+    private function afterInit():void{
       var model:Model = new Model();
       var controller:Controller = new Controller(model);
       var view:View = new View(model, controller, this.starling.stage);

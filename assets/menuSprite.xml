@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="menuSprite.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="baseCellGame"	x="0"	y="430"	width="60"	height="36" frameX="-0" frameY="-0" frameWidth="60" frameHeight="36"/>
+	<SubTexture name="btnExitGame"	x="0"	y="365"	width="224"	height="61" frameX="-0" frameY="-0" frameWidth="224" frameHeight="61"/>
+	<SubTexture name="btnSettings"	x="0"	y="235"	width="224"	height="61" frameX="-0" frameY="-0" frameWidth="224" frameHeight="61"/>
+	<SubTexture name="btnStartGame"	x="0"	y="300"	width="224"	height="61" frameX="-0" frameY="-0" frameWidth="224" frameHeight="61"/>
+	<SubTexture name="titleGameMenu"	x="0"	y="0"	width="320"	height="231" frameX="-0" frameY="-0" frameWidth="320" frameHeight="231"/>
+</TextureAtlas>

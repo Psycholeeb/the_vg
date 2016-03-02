@@ -8,6 +8,8 @@ package {
     import flash.geom.Rectangle;
     import flash.system.Capabilities;
 
+    import models.Constants;
+
     import models.Model;
 
     import screens.GameMenu;
@@ -34,19 +36,19 @@ package {
         private var starling:Starling;
         public var background:Bitmap;
         public var assets:AssetManager;
-        public var viewPort:Rectangle;
 
         public function Main(){
-            var stageWidth:int = Constants.STAGE_WIDTH;
-            var stageHeight:int = Constants.STAGE_HEIGHT;
+            var stageWidth:int = models.Constants.getStageWidth();
+            var stageHeight:int = models.Constants.getStageHeight();
             var iOS:Boolean = Capabilities.manufacturer.indexOf("iOS") != -1;
 
             Starling.multitouchEnabled = false;
             Starling.handleLostContext = !iOS;
 
-            viewPort = RectangleUtil.fit(new Rectangle(0, 0, stageWidth, stageHeight), new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight), ScaleMode.SHOW_ALL);
+            models.Constants.setViewPort(RectangleUtil.fit(new Rectangle(0, 0, stageWidth, stageHeight), new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight), ScaleMode.SHOW_ALL));
+            var viewPortSize = models.Constants.getViewPort();
 
-            var scaleFactor:int = viewPort.width < 480 ? 1 : 2; // midway between 320 and 640
+            var scaleFactor:int = viewPortSize.width < 480 ? 1 : 2; // midway between 320 and 640
             var appDir:File = File.applicationDirectory;
             assets = new AssetManager(scaleFactor);
             assets.loadQueue(function(ratio:Number):void{
@@ -58,9 +60,9 @@ package {
             //assets.enqueue(appDir.resolvePath("audio"), appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)), appDir.resolvePath(formatString("textures/{0}x", scaleFactor)));
             //assets.enqueue(EmbeddedAssets);
 
-            firstPresentationImage(scaleFactor, viewPort);
+            firstPresentationImage(scaleFactor, viewPortSize);
 
-            starling = new Starling(GameMenu, stage, viewPort);
+            starling = new Starling(GameMenu, stage, viewPortSize);
             starling.stage.stageWidth = stageWidth;
             starling.stage.stageHeight = stageHeight;
             starling.simulateMultitouch = false;

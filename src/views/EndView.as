@@ -2,6 +2,8 @@ package views {
 
   import events.EventsList;
 
+  import models.Constants;
+
   import starling.display.Button;
 
   import starling.display.Sprite;

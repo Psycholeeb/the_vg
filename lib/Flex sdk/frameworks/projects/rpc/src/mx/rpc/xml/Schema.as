@@ -90,9 +90,9 @@ public class Schema
     }
 
     /**
-     * Constants for the particular version of XML Schema that was used
+     * models.Constants for the particular version of XML Schema that was used
      * to define this Schema.
-     *  
+     *
      *  @langversion 3.0
      *  @playerversion Flash 9
      *  @playerversion AIR 1.1

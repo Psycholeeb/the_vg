@@ -1,9 +1,9 @@
-package screens {
+package views {
     import starling.display.Sprite;
 
-    public class inGame extends Sprite {
+    public class InGame extends Sprite {
 
-        public function inGame() {
+        public function InGame() {
             super();
         }
 

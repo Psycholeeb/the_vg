@@ -1,15 +1,15 @@
-package {
+package models {
     import flash.display.Bitmap;
     import flash.utils.Dictionary;
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
 
     public class Assets {
-      [Embed(source = "../assets/bgMenu.png")]
+      [Embed(source="../../assets/bgMenu.png")]
       public static const bgMenu:Class;
-      [Embed(source = "../assets/menuSprite.png")]
+      [Embed(source="../../assets/menuSprite.png")]
       public static const menuAtlas:Class;
-      [Embed(source = "../assets/menuSprite.xml", mimeType="application/octet-stream")]
+      [Embed(source="../../assets/menuSprite.xml", mimeType="application/octet-stream")]
       public static const menuAtlasXml:Class;
 
       private static var gameTexture:Dictionary = new Dictionary();

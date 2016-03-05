@@ -1,14 +1,14 @@
-package {
-    import events.NavigationEvent;
-    import screens.GameMenu;
-    import screens.inGame;
+package controllers {
+    import controllers.NavigationEvent;
+    import views.GameMenu;
+    import views.InGame;
     import starling.display.Sprite;
     import starling.events.Event;
 
     public class Game extends Sprite
     {
         public var gameWelcomeMenu:GameMenu;
-        public var screenInGame:inGame;
+        public var screenInGame:InGame;
 
         public function Game() {
             super();
@@ -21,7 +21,7 @@ package {
 
             this.addEventListener(NavigationEvent.CHANGE_SCREEN, onChangeScreen);
 
-            screenInGame = new inGame();
+            screenInGame = new InGame();
             screenInGame.disposeTemporarily();
             this.addChild(screenInGame);
         }

@@ -1,5 +1,7 @@
-package screens {
-    import events.NavigationEvent;
+package views {
+    import controllers.NavigationEvent;
+
+    import models.Assets;
 
     import starling.display.Button;
     import starling.display.Image;

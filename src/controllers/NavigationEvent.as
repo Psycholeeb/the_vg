@@ -1,4 +1,4 @@
-package events {
+package controllers {
     import starling.events.Event;
 
     public class NavigationEvent extends Event {

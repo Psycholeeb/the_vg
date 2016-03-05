@@ -12,7 +12,7 @@ package {
 
     import models.Model;
 
-    import screens.GameMenu;
+    import views.GameMenu;
 
     import starling.core.Starling;
     import starling.utils.AssetManager;
@@ -34,7 +34,7 @@ package {
         private static var BackgroundHD:Class;
 
         private var starling:Starling;
-        public var background:Bitmap;
+        private var background:Bitmap;
         public var assets:AssetManager;
 
         public function Main(){
@@ -60,7 +60,7 @@ package {
             //assets.enqueue(appDir.resolvePath("audio"), appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)), appDir.resolvePath(formatString("textures/{0}x", scaleFactor)));
             //assets.enqueue(EmbeddedAssets);
 
-            firstPresentationImage(scaleFactor, viewPortSize);
+            //firstPresentationImage(scaleFactor, viewPortSize);
 
             starling = new Starling(GameMenu, stage, viewPortSize);
             starling.stage.stageWidth = stageWidth;
@@ -71,7 +71,7 @@ package {
             afterInit();
         }
 
-        private function firstPresentationImage(scaleFactor, viewPort):void{
+        /*private function firstPresentationImage(scaleFactor, viewPort):void{
             background = scaleFactor == 1 ? new Background() : new BackgroundHD();
             Background = BackgroundHD = null; // no longer needed!
 
@@ -81,8 +81,8 @@ package {
             background.height = viewPort.height;
             background.smoothing = true;
 
-            //this.addChild(background);
-        }
+            this.addChild(background);
+        }*/
 
         private function afterInit():void{
             var model:Model = new Model();

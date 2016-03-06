@@ -33,6 +33,10 @@ package controllers {
                       screenGameMenu.disposeTemporarily();
                       screenInGame.initialize();
                     break;
+                case "menu":
+                    screenGameMenu.initialize();
+                    screenInGame.disposeTemporarilyGame();
+                    break;
             }
         }
     }

@@ -2,13 +2,14 @@ package models {
 
   import flash.geom.Rectangle;
 
-  public class Constants {
+  public class Settings {
 
     private static const STAGE_WIDTH:int = 320;
     private static const STAGE_HEIGHT:int = 480;
-    private static var viewPortSize:Rectangle;
+    private static var _viewPortSize:Rectangle;
+    private static var _scaleFactor:int;
 
-    public function Constants(){
+    public function Settings(){
 
     }
 
@@ -21,11 +22,19 @@ package models {
     }
 
     public static function setViewPort(viewPort:Rectangle):void{
-      viewPortSize = viewPort;
+      _viewPortSize = viewPort;
     }
 
     public static function getViewPort():Rectangle{
-      return viewPortSize;
+      return _viewPortSize;
+    }
+
+    public static function setScaleFactor(scale:int):void{
+      _scaleFactor = scale;
+    }
+
+    public static function getScaleFactor():int{
+      return _scaleFactor;
     }
   }
 }

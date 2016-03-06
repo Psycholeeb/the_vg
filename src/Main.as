@@ -8,9 +8,11 @@ package {
     import flash.geom.Rectangle;
     import flash.system.Capabilities;
 
-    import models.Constants;
+    import models.Settings;
 
     import models.Model;
+
+    import starling.utils.formatString;
 
     import views.GameMenu;
 
@@ -19,7 +21,7 @@ package {
     import starling.utils.RectangleUtil;
     import starling.utils.ScaleMode;
 
-    import views.View;
+    import views.InGame;
 
     [SWF(frameRate="30", backgroundColor="#CCCCCC")]
 
@@ -38,40 +40,42 @@ package {
         public var _assets:AssetManager;
 
         public function Main(){
-            var stageWidth:int = models.Constants.getStageWidth();
-            var stageHeight:int = models.Constants.getStageHeight();
+            var stageWidth:int = models.Settings.getStageWidth();
+            var stageHeight:int = models.Settings.getStageHeight();
             var iOS:Boolean = Capabilities.manufacturer.indexOf("iOS") != -1;
 
             Starling.multitouchEnabled = false;
             Starling.handleLostContext = !iOS;
 
-            models.Constants.setViewPort(RectangleUtil.fit(new Rectangle(0, 0, stageWidth, stageHeight), new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight), ScaleMode.SHOW_ALL));
-            var viewPortSize = models.Constants.getViewPort();
+            var viewPortSize = RectangleUtil.fit(new Rectangle(0, 0, stageWidth, stageHeight), new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight), ScaleMode.SHOW_ALL);
+            models.Settings.setViewPort(viewPortSize);
 
             var scaleFactor:int = viewPortSize.width < 480 ? 1 : 2; // midway between 320 and 640
-            var appDir:File = File.applicationDirectory;
+            models.Settings.setScaleFactor(scaleFactor);
+
+            //var appDir:File = File.applicationDirectory;
             _assets = new AssetManager(scaleFactor);
             _assets.loadQueue(function(ratio:Number):void{
                 trace("Loading assets, progress:", ratio);
             });
 
-            _assets.verbose = Capabilities.isDebugger;
-            //assets.verbose = true;
-            //assets.enqueue(appDir.resolvePath("audio"), appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)), appDir.resolvePath(formatString("textures/{0}x", scaleFactor)));
-            //assets.enqueue(EmbeddedAssets);
+            //_assets.verbose = Capabilities.isDebugger;
+            //_assets.verbose = true;
+            //_assets.enqueue(appDir.resolvePath("audio"), appDir.resolvePath(formatString("fonts/{0}x", scaleFactor)), appDir.resolvePath(formatString("textures/{0}x", scaleFactor)));
+            //_assets.enqueue(EmbeddedAssets);
 
             //firstPresentationImage(scaleFactor, viewPortSize);
 
             _starling = new Starling(GameMenu, stage, viewPortSize);
-            _starling.stage.stageWidth = stageWidth;
-            _starling.stage.stageHeight = stageHeight;
+            //_starling.stage.stageWidth = stageWidth;
+            //_starling.stage.stageHeight = stageHeight;
             _starling.simulateMultitouch = false;
             _starling.enableErrorChecking = Capabilities.isDebugger;
 
             afterInit();
         }
 
-        private function firstPresentationImage(scaleFactor, viewPort):void{
+        /*private function firstPresentationImage(scaleFactor, viewPort):void{
             _background = scaleFactor == 1 ? new Background() : new BackgroundHD();
             Background = BackgroundHD = null; // no longer needed!
 
@@ -82,12 +86,17 @@ package {
             _background.smoothing = true;
 
             this.addChild(_background);
-        }
+        }*/
 
         private function afterInit():void{
             var model:Model = new Model();
             var controller:Controller = new Controller(model);
-            var view:View = new View(model, controller, this._starling.stage);
+            var view:InGame = new InGame(model, controller, this._starling.stage);
+
+            _starling.antiAliasing = 1;
+            // Show statistics for memory usage and fps.
+            _starling.showStats = true;
+            _starling.showStatsAt("left", "bottom");
 
             _starling.start();
         }

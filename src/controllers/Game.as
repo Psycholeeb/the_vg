@@ -7,7 +7,7 @@ package controllers {
 
     public class Game extends Sprite
     {
-        public var gameWelcomeMenu:GameMenu;
+        public var screenGameMenu:GameMenu;
         public var screenInGame:InGame;
 
         public function Game() {
@@ -16,21 +16,22 @@ package controllers {
         }
 
         private function onAddedToStage(event:Event):void{
-            gameWelcomeMenu = new GameMenu();
-            this.addChild(gameWelcomeMenu);
-
             this.addEventListener(NavigationEvent.CHANGE_SCREEN, onChangeScreen);
 
             screenInGame = new InGame();
             screenInGame.disposeTemporarily();
             this.addChild(screenInGame);
+
+            screenGameMenu = new GameMenu();
+            this.addChild(screenGameMenu);
+            screenGameMenu.initialize();
         }
 
         private function onChangeScreen(e:NavigationEvent):void{
             switch (e.params.id){
                 case "play":
-                        gameWelcomeMenu.disposeTemporarily();
-                        screenInGame.initialize();
+                      screenGameMenu.disposeTemporarily();
+                      screenInGame.initialize();
                     break;
             }
         }

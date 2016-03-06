@@ -1,6 +1,7 @@
 package {
 
     import controllers.Controller;
+    import controllers.Game;
 
     import flash.display.Bitmap;
     import flash.display.Sprite;
@@ -66,7 +67,7 @@ package {
 
             //firstPresentationImage(scaleFactor, viewPortSize);
 
-            _starling = new Starling(GameMenu, stage, viewPortSize);
+            _starling = new Starling(Game, stage, viewPortSize);
             //_starling.stage.stageWidth = stageWidth;
             //_starling.stage.stageHeight = stageHeight;
             _starling.simulateMultitouch = false;
@@ -91,7 +92,6 @@ package {
         private function afterInit():void{
             var model:Model = new Model();
             var controller:Controller = new Controller(model);
-            var view:InGame = new InGame(model, controller, this._starling.stage);
 
             _starling.antiAliasing = 1;
             // Show statistics for memory usage and fps.

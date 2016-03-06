@@ -5,8 +5,10 @@ package models {
     import starling.textures.TextureAtlas;
 
     public class Assets {
-      [Embed(source="../../assets/bgMenu.png")]
-      public static const bgMenu:Class;
+      [Embed(source="../../assets/bgSceneMenu.png")]
+      public static const bgSceneMenu:Class;
+      [Embed(source="../../assets/bgSceneInGame.png")]
+      public static const bgSceneInGame:Class;
       [Embed(source="../../assets/menuSprite.png")]
       public static const menuAtlas:Class;
       [Embed(source="../../assets/menuSprite.xml", mimeType="application/octet-stream")]

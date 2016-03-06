@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TextureAtlas imagePath="ingameAtlas.png">
-	<SubTexture name="grid"	x="0"	y="0"	width="108"	height="108" frameX="-0" frameY="-0" frameWidth="108" frameHeight="108"/>
-</TextureAtlas>
